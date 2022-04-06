@@ -3,16 +3,22 @@ package Task3;
 
 public class GroupJournal {
     int numberOfStudents;
-    final int[][] studentMarks;
+    int weeks = 4;
+    final Cell[][] studentMarks;
 
     public GroupJournal(int numberOfStudents){
         this.numberOfStudents = numberOfStudents;
-        studentMarks = new int[numberOfStudents][4];
+        studentMarks = new Cell[numberOfStudents][weeks];
+        for(int i=0; i<numberOfStudents; i++){
+            for(int j=0; j<weeks; j++){
+                studentMarks[i][j] = new Cell();
+            }
+        }
     }
 
     public void setPoint(int point, int studNumb, int weekNumb) {
-        synchronized (studentMarks[studNumb]){
-            studentMarks[studNumb][weekNumb] = point;
+        synchronized (studentMarks[studNumb][weekNumb]){
+            studentMarks[studNumb][weekNumb].setMark(point);
         }
     }
 
@@ -22,8 +28,8 @@ public class GroupJournal {
 
     public void showJournal() {
         for(int i=0; i<numberOfStudents; i++){
-            for(int j=0; j<4; j++){
-                System.out.print(studentMarks[i][j]+ " ");
+            for(int j=0; j<weeks; j++){
+                System.out.print(studentMarks[i][j].getMark()+ " ");
             }
             System.out.println();
         }
